@@ -1,0 +1,9 @@
+# Ignore local book manuscript and drafts
+book.md
+book/**
+
+# Keep local documentation private
+README.md
+
+# macOS
+.DS_Store
