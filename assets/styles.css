@@ -1,0 +1,249 @@
+/* ===== Theme tokens (tweak here to re-skin) ===== */
+:root{
+  /* Brand & text */
+  --brand:#9E3737;   /* primary brand (buttons/links) */
+  --red:#9E3737;     /* legacy alias for brand */
+  --ink:#1a1a1a;     /* body text */
+  --muted:#6b7280;   /* secondary text */
+  --on-brand:#ffffff; /* text on brand backgrounds (buttons/CTA) */
+
+  /* Surfaces */
+  --bg:#ffffff;      /* page background */
+  --surface:#ffffff; /* cards and UI surfaces */
+  --surface-hover:#f7f7f7; /* subtle hover for surface elements */
+
+  /* Accents (from book cover) */
+  --blush:#F5D2C8;   /* background pink */
+  --blush-2:#FBEDEC; /* lighter section pink */
+
+  /* Derived brand tints */
+  --brand-ink-1:#7f3a3a; /* heading tint */
+  --brand-ink-2:#5b2f2f; /* lead tint */
+  --brand-tint:#fdecea;  /* subtle bg */
+  --brand-tint-border:#e7bdb3;
+
+  /* Borders/hairlines */
+  --border:#f0d0c8;
+  --border-alt:#f1cbc3;
+  --hairline:#eeeeee;
+
+  /* Components */
+  --quote-bg:#FFF8E6;
+  --quote-border:#E8D28F;
+
+  /* Layout */
+  --radius:14px;
+  --shadow:0 14px 30px rgba(0,0,0,.08);
+  --wrap:1040px;
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background: var(--bg);
+}
+img{max-width:100%;height:auto;display:block}
+
+/* Utilities */
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 18px}
+.muted{color:var(--muted)}
+.small{font-size:.92rem}
+.rounded{border-radius:var(--radius)}
+.shadow{box-shadow:var(--shadow)}
+
+/* Buttons */
+.btn{display:inline-block; text-decoration:none; border:2px solid var(--brand); padding:.8rem 1.1rem; border-radius:10px; font-weight:700; transition:background-color .15s ease, color .15s ease, border-color .15s ease, transform .12s ease, box-shadow .12s ease}
+.btn-sm{padding:.5rem .8rem; font-weight:600}
+.btn-primary{background:var(--brand); color:#fff; border-color:var(--brand)}
+.btn-primary{background:var(--brand); color:var(--on-brand); border-color:var(--brand)}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-outline{color:var(--brand); background:var(--surface)}
+.btn-outline:hover{background:var(--blush-2)}
+/* Larger button variant already used */
+.btn-lg{padding:1rem 1.25rem; font-size:1.05rem}
+
+/* Subtle raise/expansion for buttons */
+.btn:hover,
+.btn:focus-visible{transform:translateY(-1px) scale(1.02); box-shadow:0 10px 20px rgba(0,0,0,.12)}
+
+/* Topbar */
+.topbar{position:sticky; top:0; z-index:50; background:var(--surface); border-bottom:1px solid var(--hairline)}
+.topbar .wrap{display:flex; align-items:center; justify-content:space-between; padding:.6rem 18px}
+.brand{letter-spacing:.5px}
+.brand{font-size:20px; text-decoration:none; color:var(--brand); line-height:1;}
+.brand:hover{transform:translateY(-1px) scale(1.04)}
+
+/* Grid */
+.grid{display:grid; gap:28px; align-items:center}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+@media (min-width:900px){ .grid{grid-template-columns:1.1fr .9fr} }
+@media (min-width:900px){ .grid.mirror{grid-template-columns:.9fr 1.1fr} }
+.col{min-width:0}
+
+/* Cover image radius used in index hero */
+.cover{border-radius:18px}
+.ticks{list-style:none; padding:0; margin:0 0 1.2rem}
+.ticks li{position:relative; padding-left:1.6rem; margin:.25rem 0}
+.ticks li::before{
+  content:"✓"; position:absolute; left:0; top:0; color:var(--brand); font-weight:900
+}
+/* Reusable CTA row */
+.cta-row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+
+/* (Trust strip removed – not used by index2) */
+
+/* Inside */
+.center{text-align:center}
+.inside{background:var(--surface); padding:56px 0}
+.inside h2{margin:0 0 18px; text-align: center;}
+.cards{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--blush-2); border:1px solid var(--border-alt); border-radius:var(--radius); padding:18px}
+/* Chapters layout: 4 + 4 + wide toolbox */
+.cards.chapters{grid-template-columns:1fr}
+@media (min-width:600px){ .cards.chapters{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:900px){ .cards.chapters{grid-template-columns:repeat(4,1fr)} }
+/* On narrow screens, wide cards naturally span 1 column; on wide screens, span 2 */
+.cards.chapters .card.toolbox{background:var(--surface); border:2px solid var(--brand)}
+@media (min-width:900px){
+  .cards.chapters .card.toolbox{grid-column:span 2}
+  .cards.chapters .card.tools-card{grid-column:span 2}
+}
+/* Testimonial quote card styling */
+.quote-card{position:relative; background:var(--quote-bg); border:2px solid var(--quote-border)}
+.quote-card::before{
+  content:"\201C"; /* left double quotation mark */
+  position:absolute; z-index:0; left:10px; top:-10px;
+  font-size:160px; line-height:1; color:rgba(0,0,0,.06);
+  font-weight:900; pointer-events:none
+}
+.quote-card > *{position:relative; z-index:1}
+/* Tighten heading spacing inside chapter cards (padding already provides spacing) */
+.card h3{margin-top:0}
+
+/* (Testimonials removed – not used by index2) */
+
+/* (Legacy previews removed – index2 uses .inside cards) */
+
+/* Pricing (used by index2 price cards) */
+.price.card{background:var(--surface); border:1px solid var(--border)}
+.price .price-tag{font-size:1.8rem; font-weight:800; margin:.2rem 0 .6rem}
+.featured{border:2px solid var(--brand)}
+.mini{list-style:disc; padding-left:1.2rem; margin:.5rem 0 1rem}
+.mini li{margin:.15rem 0}
+/* Two-column list for dense tool lists */
+@media (min-width:900px){
+  .mini.twocol{columns:2; column-gap:24px}
+  .mini.twocol li{break-inside:avoid}
+}
+
+/* FAQ */
+.faq{background:var(--blush); padding:56px 0}
+details{background:var(--surface); border:1px solid var(--border-alt); border-radius:10px; padding:12px 14px; margin:10px 0}
+summary{cursor:pointer; font-weight:700}
+
+/* Footer */
+.footer{background:var(--surface); border-top:1px solid var(--hairline)}
+.footgrid{display:flex; align-items:center; justify-content:space-between; padding:22px 18px; gap:12px}
+.footnav{display:flex; gap:14px; align-items:center}
+/* Header nav uses .topnav; footer nav uses .footnav */
+.footnav a, .topnav a{ text-decoration:none; transition:color .15s ease, background-color .15s ease, transform .12s ease }
+.footnav a:not(.btn), .topnav a:not(.btn){ color:var(--ink) }
+.footnav a:not(.btn):hover, .topnav a:not(.btn):hover{ color:var(--brand) }
+.footnav a:focus-visible, .topnav a:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+
+/* Header nav emphasis */
+.topnav{display:flex; gap:10px; flex-wrap:wrap}
+.topnav a{color:var(--brand); font-weight:700; display:inline-block; padding:.3rem .55rem; border-radius:8px}
+.topnav a:hover,
+.topnav a:focus-visible{background:var(--blush-2); transform:translateY(-1px) scale(1.02)}
+
+/* Sticky mobile CTA */
+.sticky-buy{
+  position:fixed; left:16px; right:16px; bottom:16px; z-index:60;
+  display:none; text-align:center; text-decoration:none;
+  background:var(--brand); color:var(--on-brand); font-weight:800;
+  padding:.9rem 1rem; border-radius:12px; box-shadow:var(--shadow)
+}
+@media (max-width:760px){ .sticky-buy{display:block} .topbar .btn{display:none} }
+
+/* ===== Page-specific enhancements (moved from head) ===== */
+:root { scroll-behavior:smooth; --header-offset: 76px }
+/* Offset scroll position for sticky header when using in-page anchors */
+section[id], details[id], [id^="faq-"]{ scroll-margin-top: var(--header-offset) }
+.hero{padding:60px 0 42px; background:linear-gradient(180deg, var(--blush-2), var(--bg) 80%)}
+.eyebrow{display:inline-block; font-weight:700; color:var(--brand-ink-1); background:var(--brand-tint); border:1px solid var(--brand-tint-border); padding:.35rem .6rem; border-radius:999px}
+.title-xl{font-size:clamp(2.2rem, 4vw + 1rem, 3.4rem); line-height:1.08; letter-spacing:-.02em; margin:.6rem 0 .8rem}
+.lead-xl{font-size:1.2rem; color:var(--brand-ink-2)}
+.hero-cta{display:flex; gap:12px; margin:18px 0 0; flex-wrap:wrap}
+.hero-art{position:relative}
+.hero-card{position:absolute; right:0; top:8%; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:var(--shadow); width:min(340px, 88%)}
+.hero-card h3{margin:.2rem 0 .4rem; font-size:1rem; color:var(--brand-ink-1)}
+.hero-card ul{margin:0; padding-left:1rem}
+
+/* Quick tools grid */
+.tools{padding:22px 0 8px}
+.toolgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px}
+.tool{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px}
+.tool h3{margin:.2rem 0 .3rem; font-size:1rem; color:var(--brand-ink-1)}
+.tool p{margin:.2rem 0 0}
+
+/* Steps section */
+.steps{padding:40px 0}
+.step{background:var(--blush-2); border:1px solid var(--border-alt); border-radius:14px; padding:16px}
+.stepnum{font-weight:900; color:var(--brand)}
+/* Vertical list for steps */
+.step-list{display:flex; flex-direction:column; gap:14px}
+
+/* Pull quotes */
+.pulls{padding:12px 0 26px}
+.pull{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; font-size:1.05rem}
+.pull em{color:var(--brand-ink-1)}
+
+/* Pricing */
+.pricing{padding:56px 0}
+.price .kicker{font-size:.9rem; color:var(--brand-ink-1); margin:-4px 0 6px}
+.price .cta-row{margin-top:.6rem}
+
+/* Footer v2 */
+.footbar{display:flex; gap:10px; flex-wrap:wrap}
+
+/* Audience section */
+.thumb{width:100%; height:180px; object-fit:cover; border-radius:10px; border:1px solid var(--border); margin-bottom:10px; background:var(--surface)}
+
+/* Audience intro side image (transparent PNG) */
+.audience .side-illustration{
+  display:block;
+  max-width:150px;
+  width:100%;
+  height:auto;
+  margin:0 auto 18px; /* add bottom space before cards on mobile */
+  border:none;
+  box-shadow:none;
+  background:transparent;
+}
+@media (min-width:900px){
+  .audience .side-illustration{
+    margin-left:auto; /* right-align inside right column on desktop */
+    margin-right:0;
+    margin-bottom:18px; /* tighter on desktop, grid already has spacing */
+  }
+}
+
+/* Modal styles */
+.modal{position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; padding:18px; z-index:100}
+.modal[hidden]{display:none}
+.modal-dialog{max-width:min(740px, 92vw); max-height:85vh; overflow:auto; background:var(--surface); border-radius:14px; border:1px solid var(--border); padding:20px 18px; box-shadow:var(--shadow)}
+.modal h2{margin:0 0 8px}
+.modal h3{margin:18px 0 8px}
+.modal-close{position:sticky; float:right; top:0; left:calc(100% - 32px); transform:translateY(-6px); border:none; background:var(--surface); border:1px solid var(--hairline); border-radius:999px; width:28px; height:28px; line-height:26px; text-align:center; cursor:pointer}
+.modal-close:hover{background:var(--surface-hover)}
+
+/* Author section */
+.author .headshot{
+  width:250px; object-fit:cover; border-radius:18px; border:1px solid var(--border); background:var(--surface); display:block; margin:0 auto;
+}
+@media (min-width:900px){
+}
