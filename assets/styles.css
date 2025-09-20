@@ -216,13 +216,12 @@ section[id], details[id], [id^="faq-"]{ scroll-margin-top: var(--header-offset) 
 /* Audience intro side image (transparent PNG) */
 .audience .side-illustration{
   display:block;
-  max-width:150px;
   width:100%;
   height:auto;
-  margin:0 auto 18px; /* add bottom space before cards on mobile */
   border:none;
   box-shadow:none;
   background:transparent;
+  border-radius: var(--radius);
 }
 @media (min-width:900px){
   .audience .side-illustration{
