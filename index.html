@@ -47,8 +47,9 @@
 <body id="top">
   <header class="topbar">
     <div class="wrap">
+      <button class="menu-toggle" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">☰</button>
       <a href="#top" class="brand" aria-label="Scroll to top">❤</a>
-      <nav class="topnav" aria-label="Primary">
+      <nav id="primary-nav" class="topnav" aria-label="Primary">
         <a href="#audience">Who It's for</a>
         <a href="#tools">Tools</a>
         <a href="#chapters">Chapters</a>
@@ -61,6 +62,7 @@
       <a href="#buy" class="btn btn-primary">Get the Playbook</a>
     </div>
   </header>
+  <div class="nav-overlay" hidden></div>
 
   <!-- HERO 2 -->
   <section class="hero">
@@ -575,6 +577,10 @@
       if (e.key === 'Escape') {
         const open = document.querySelector('.modal.open');
         open && closeModal(open);
+        // close mobile nav if open
+        if (document.body.classList.contains('nav-open')) {
+          toggleNav(false);
+        }
       }
     });
 
@@ -591,6 +597,22 @@
     window.addEventListener('hashchange', openFaqFromHash);
     // run once on load
     openFaqFromHash();
+
+    // Mobile nav
+    const menuBtn = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('primary-nav');
+    const navOverlay = document.querySelector('.nav-overlay');
+    function toggleNav(force) {
+      const willOpen = typeof force === 'boolean' ? force : !document.body.classList.contains('nav-open');
+      document.body.classList.toggle('nav-open', willOpen);
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', String(willOpen));
+      if (navOverlay) navOverlay.hidden = !willOpen;
+      document.body.style.overflow = willOpen ? 'hidden' : '';
+    }
+    menuBtn && menuBtn.addEventListener('click', () => toggleNav());
+    navOverlay && navOverlay.addEventListener('click', () => toggleNav(false));
+    // close menu when a link is clicked (mobile)
+    nav && nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
   </script>
 </body>
 
