@@ -47,7 +47,11 @@
 <body id="top">
   <header class="topbar">
     <div class="wrap">
-      <button class="menu-toggle" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">☰</button>
+      <button class="menu-toggle" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
       <a href="#top" class="brand" aria-label="Scroll to top">❤</a>
       <nav id="primary-nav" class="topnav" aria-label="Primary">
         <a href="#audience">Who It's for</a>
@@ -336,6 +340,9 @@
 
   <!-- Pricing v2 -->
   <section id="buy" class="pricing">
+    <div class="wrap">
+      <h2>Pricing</h2>
+    </div>
     <div class="wrap grid three">
       <article class="price card">
         <div class="kicker">Start Here</div>
@@ -613,6 +620,12 @@
     navOverlay && navOverlay.addEventListener('click', () => toggleNav(false));
     // close menu when a link is clicked (mobile)
     nav && nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
+    // guard: on resize to desktop, ensure nav is closed and overlay hidden
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 760 && document.body.classList.contains('nav-open')) {
+        toggleNav(false);
+      }
+    });
   </script>
 </body>
 
