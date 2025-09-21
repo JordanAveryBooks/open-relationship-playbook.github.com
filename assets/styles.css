@@ -381,7 +381,7 @@ img {
 }
 
 /* Tighten heading spacing inside chapter cards (padding already provides spacing) */
-.card h3 {
+.card , blockquote p {
   margin-top: 0
 }
 
@@ -759,6 +759,56 @@ h2 + .lead-xl {
   margin: .2rem 0 0
 }
 
+/* Toolbox section */
+.toolbox-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 14px
+}
+
+@media (min-width:780px) {
+  .toolbox-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 22px
+  }
+}
+
+.tb-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px
+}
+
+.tb-emoji {
+  font-size: 22px;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--blush-2);
+  border: 1px solid var(--border-alt)
+}
+
+.tb-body h3 {
+  margin: .1rem 0 .25rem;
+  font-size: 1.1rem;
+  color: var(--brand-ink-1)
+}
+
+.tb-body p {
+  margin: .1rem 0 0;
+  color: var(--brand-ink-2)
+}
+
 /* Steps section */
 .steps {
   padding: 48px 0
@@ -789,21 +839,55 @@ h2 + .lead-xl {
   }
 }
 
-/* Pull quotes */
-.pulls {
-  padding: 12px 0 26px
+/* Enhanced step visuals */
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px
 }
 
-.pull {
+.step-head h3 {
+  margin: 0;
+  font-size: 1.1rem
+}
+
+.num-badge {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: var(--on-brand);
+  font-weight: 800;
+  line-height: 1
+}
+
+.step p {
+  margin: .2rem 0 .4rem
+}
+
+.step-tools {
+  display: flex;
+  gap: 6px 8px;
+  align-items: center;
+  flex-wrap: wrap
+}
+
+.chip {
+  display: inline-block;
+  padding: .1rem .5rem;
+  border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  font-size: 1.05rem
+  text-decoration: none;
+  color: var(--ink);
+  font-size: .9rem
 }
 
-.pull em {
-  color: var(--brand-ink-1)
+.chip:hover {
+  background: var(--blush-2)
 }
 
 /* Reviews */
