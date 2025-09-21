@@ -389,10 +389,20 @@ img {
 
 /* (Legacy previews removed – index2 uses .inside cards) */
 
-/* Pricing (used by index2 price cards) */
+/* Pricing (used by index price cards) */
 .price.card {
-  background: var(--surface);
-  border: 1px solid var(--border)
+  position: relative;
+  background: linear-gradient(180deg, #ffffff, var(--blush-2) 100%);
+  border: 1px solid var(--border);
+  /* subtle brand-tinted accent bar */
+  border-top: 4px solid var(--brand-tint-border);
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease
+}
+
+.price.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .12)
 }
 
 .price .price-tag {
@@ -401,8 +411,13 @@ img {
   margin: .2rem 0 .6rem
 }
 
-.featured {
-  border: 2px solid var(--brand)
+/* Featured plan gets stronger emphasis */
+.price.card.featured {
+  background: linear-gradient(180deg, #ffffff, var(--brand-tint) 100%);
+  border: 2px solid var(--brand);
+  border-top: 6px solid var(--brand);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .14);
+  transform: translateY(-2px)
 }
 
 .mini {
@@ -932,14 +947,36 @@ h2 + .lead-xl {
   }
 }
 
+/* Give pricing section a gentle brand-tinted backdrop */
+.pricing {
+  background: linear-gradient(180deg, var(--brand-tint), var(--bg) 86%)
+}
+
 .price .kicker {
-  font-size: .9rem;
+  display: inline-block;
+  font-size: .88rem;
   color: var(--brand-ink-1);
-  margin: -4px 0 6px
+  background: var(--brand-tint);
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  margin: -2px 0 8px
 }
 
 .price .cta-row {
-  margin-top: .6rem
+  margin-top: .6rem;
+  justify-content: center
+}
+
+/* Center key emphasis while keeping feature list left-aligned */
+.price h3,
+.price .price-tag {
+  text-align: center
+}
+
+.price .price-tag {
+  font-size: 2rem
 }
 
 /* Footer v2 */
