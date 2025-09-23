@@ -310,12 +310,6 @@ img {
   text-align: center;
 }
 
-@media (min-width:900px) {
-  .wrap h2 {
-    margin-bottom: 65px
-  }
-}
-
 .cards {
   display: grid;
   gap: 22px;
