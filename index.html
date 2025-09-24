@@ -76,9 +76,9 @@
           <li>Incl. Toolbox with 14 different worksheets.</li>
         </ul>
         <div class="hero-cta">
-          <a href="https://jordanavery19.gumroad.com/l/open-relationship-playbook?option=meEwnMuDgyTKDdDTHiPekg%3D%3D" data-gumroad-single-product="true" class="btn btn-primary">Get
+          <a href="#buy" data-scroll-action="plans" class="btn btn-primary">Get
             Instant Access</a>
-          <a class="btn btn-outline" href="https://jordanavery19.gumroad.com/l/open-relationship-playbook-sneakpeek" data-gumroad-single-product="true">Read the first chapter free</a>
+          <a class="btn btn-outline" href="#buy" data-scroll-action="sneak">Read the first chapter free</a>
           <span class="small muted">🔒 Secure checkout · 30‑day money‑back guarantee</span>
         </div>
       </div>
@@ -799,6 +799,124 @@
       window.addEventListener('resize', update);
       // initial
       update();
+    })();
+
+    // Hero CTA scroll + highlight logic
+    (function(){
+      const pricingSection = document.getElementById('buy');
+      const heroCtas = document.querySelectorAll('.hero-cta [data-scroll-action]');
+      let removeTimer = null;
+      // Dynamic topbar height CSS var
+      function updateTopbarH(){
+        const tb = document.querySelector('.topbar');
+        if(tb){
+          document.documentElement.style.setProperty('--topbar-h', tb.getBoundingClientRect().height + 'px');
+        }
+      }
+      updateTopbarH();
+      window.addEventListener('resize', updateTopbarH);
+
+      function clearPrev(){ if(removeTimer){ clearTimeout(removeTimer); removeTimer=null; } document.querySelectorAll('.pulse-focus').forEach(el=> el.classList.remove('pulse-focus')); }
+      function highlight(action){
+        clearPrev();
+        if(!pricingSection) return;
+        if(action==='plans') {
+          pricingSection.querySelectorAll('.grid.three article.price.card').forEach(c=> c.classList.add('pulse-focus'));
+        } else if(action==='sneak') {
+          const btn = pricingSection.querySelector('.btn-accent'); btn && btn.classList.add('pulse-focus');
+        }
+        removeTimer = setTimeout(clearPrev, 7600);
+      }
+
+      // Smart scroll that retries until stable (handles first load shifts & mobile address bar changes)
+      function smartScroll(target, opts={}){
+        if(!target) return;
+        const header = document.querySelector('.topbar');
+        const offsetBase = header ? header.getBoundingClientRect().height : 0;
+        const extra = opts.extraOffset ?? 12;
+        let lastTop = null;
+        let stableCount = 0;
+        const maxFrames = 50; // ~800ms at 60fps
+        let frame = 0;
+        let scrolling = true;
+        function computeY(){
+          const r = target.getBoundingClientRect();
+          return r.top + window.pageYOffset - offsetBase - extra;
+        }
+        function applyScroll(y, behavior){
+          window.scrollTo({ top: Math.max(0, y), behavior });
+        }
+        // initial
+        applyScroll(computeY(), 'smooth');
+        function tick(){
+          frame++;
+            const rTop = target.getBoundingClientRect().top;
+            if(lastTop !== null){
+              const delta = Math.abs(rTop - lastTop);
+              if(delta < 2) { stableCount++; } else { stableCount = 0; }
+            }
+            lastTop = rTop;
+            // If element is too high (hidden under header) or has moved a lot, snap-correct
+            const headerH = offsetBase;
+            if(rTop < headerH + 4){
+              applyScroll(computeY(), 'auto');
+            }
+            if((stableCount >= 6) || frame >= maxFrames){
+              scrolling = false;
+              opts.onDone && opts.onDone();
+              return;
+            }
+            if(scrolling) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function handleHero(action){
+        if(!pricingSection) return;
+        let target = null;
+        if(action==='plans') target = pricingSection.querySelector('.grid.three article.price.card');
+        if(action==='sneak') target = pricingSection.querySelector('.btn-accent');
+        if(!target) target = pricingSection;
+        smartScroll(target, { onDone: ()=> highlight(action) });
+      }
+
+      heroCtas.forEach(a=> a.addEventListener('click', e=>{ e.preventDefault(); handleHero(a.getAttribute('data-scroll-action')); }));
+
+      // Intercept internal hash links (#...) to use smartScroll for consistent behavior
+      document.addEventListener('click', (e)=>{
+        const a = e.target.closest('a[href^="#"]');
+        if(!a) return;
+        const href = a.getAttribute('href');
+        if(href.length < 2) return; // just '#'
+        const id = href.substring(1);
+        const target = document.getElementById(id);
+        if(!target) return; // allow default if no element
+        // Allow normal for modals (they use custom data attributes) or hero ctas (already handled)
+        if(a.dataset.modalOpen) return;
+        if(a.hasAttribute('data-scroll-action')) return;
+        e.preventDefault();
+        smartScroll(target);
+        history.pushState(null, '', '#' + id);
+      });
+
+      // Handle direct hash access on first load (after load to ensure images sized)
+      window.addEventListener('load', ()=>{
+        if(location.hash && location.hash.length > 1){
+          const t = document.getElementById(location.hash.substring(1));
+          if(t){
+            setTimeout(()=> smartScroll(t), 30); // slight defer lets layout finalize
+          }
+        }
+      });
+
+      // Optional: adjust on mobile viewport height changes (Safari address bar) if visualViewport exists
+      if(window.visualViewport){
+        let pending=null;
+        window.visualViewport.addEventListener('resize', ()=>{
+          if(pending) cancelAnimationFrame(pending);
+          pending = requestAnimationFrame(()=> updateTopbarH());
+        });
+      }
     })();
   </script>
 </body>
