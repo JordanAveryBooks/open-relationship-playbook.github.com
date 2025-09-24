@@ -48,6 +48,10 @@
   --radius: 14px;
   --shadow: 0 14px 30px rgba(0, 0, 0, .08);
   --wrap: 1040px;
+  
+  /* New accent (primary CTA) */
+  --accent: #118a52; /* green primary for Sneak Peek */
+  --accent-hover: #0f7847;
 }
 
 /* Base */
@@ -137,6 +141,19 @@ img {
   background: var(--blush-2)
 }
 
+/* Accent (green) CTA variant */
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.btn-accent:hover,
+.btn-accent:focus-visible {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
+}
+
 /* Larger button variant already used */
 .btn-lg {
   padding: 1rem 1.25rem;
@@ -216,7 +233,7 @@ img {
 }
 
 .brand {
-  font-size: 20px;
+  font-size: 55px;
   text-decoration: none;
   color: var(--brand);
   line-height: 1;
@@ -375,7 +392,8 @@ img {
 }
 
 /* Tighten heading spacing inside chapter cards (padding already provides spacing) */
-.card , blockquote p {
+.card,
+blockquote p {
   margin-top: 0
 }
 
@@ -392,8 +410,10 @@ img {
   border-top: 4px solid var(--brand-tint-border);
   box-shadow: var(--shadow);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  display: flex;           /* equal-height support */
-  flex-direction: column;  /* stack content and CTA */
+  display: flex;
+  /* equal-height support */
+  flex-direction: column;
+  /* stack content and CTA */
 }
 
 /* Disable hover lift on cards themselves; keep only button hovers */
@@ -416,6 +436,7 @@ img {
   box-shadow: 0 20px 44px rgba(0, 0, 0, .14);
   transform: translateY(-2px)
 }
+
 /* Keep featured card appearance consistent on hover */
 .price.card.featured:hover {
   transform: translateY(-2px);
@@ -540,24 +561,40 @@ summary {
   right: 16px;
   bottom: 16px;
   z-index: 60;
-  display: none;
+  display: none; /* only enabled in mobile media query */
   text-align: center;
   text-decoration: none;
-  background: var(--brand);
-  color: var(--on-brand);
-  font-weight: 800;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800; 
   padding: .9rem 1rem;
   border-radius: 12px;
-  box-shadow: var(--shadow)
+  box-shadow: var(--shadow);
+  /* Hidden by default (for mobile we rely on opacity/visibility so we can animate) */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .35s ease, transform .35s ease, visibility .35s linear;
 }
 
 @media (max-width:760px) {
   .sticky-buy {
-    display: block
+    display: block; /* becomes potentially visible on mobile */
+  }
+  /* Visible state after scroll threshold (JS adds .is-visible) */
+  .sticky-buy.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .topbar .btn {
-    display: none
+    width: 38px;
+    height: 0px;
+    overflow: hidden;
+    opacity: 0;
   }
 }
 
@@ -586,7 +623,7 @@ summary {
   /* Off-canvas drawer from the left */
   .topnav {
     position: fixed;
-    top: 52px;
+    top: 75px;
     left: 0;
     bottom: 0;
     width: min(78vw, 320px);
@@ -658,7 +695,7 @@ details[id],
   margin: 10px 0 22px
 }
 
-h2 + .lead-xl {
+h2+.lead-xl {
   margin-bottom: 50px;
 }
 
@@ -956,7 +993,8 @@ h2 + .lead-xl {
 
 /* Ensure equal-height price cards within pricing grid */
 .pricing .grid {
-  align-items: stretch; /* override global center for equal height */
+  align-items: stretch;
+  /* override global center for equal height */
 }
 
 .price .kicker {
@@ -972,7 +1010,8 @@ h2 + .lead-xl {
 }
 
 .price .cta-row {
-  margin-top: auto; /* push CTA to bottom for equal height */
+  margin-top: auto;
+  /* push CTA to bottom for equal height */
   justify-content: center
 }
 

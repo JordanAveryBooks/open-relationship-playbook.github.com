@@ -54,6 +54,7 @@
       </button>
       <a href="#top" class="brand" aria-label="Scroll to top">❤</a>
       <nav id="primary-nav" class="topnav" aria-label="Primary">
+        <a href="#top">Home</a>
         <a href="#benefits">Why</a>
         <a href="#chapters">Inside</a>
         <a href="#buy">Pricing</a>
@@ -499,10 +500,11 @@
   <section id="buy" class="pricing">
     <div class="wrap">
       <h2>Pricing</h2>
-      <p class="lead-xl center">Just curious? Grab the Sneak Peek — the first chapter is free.</p>
+      <p class="lead-xl center"></p>
       <p class="center">
-        <a class="btn btn-outline" href="https://jordanavery19.gumroad.com/l/open-relationship-playbook-sneakpeek" data-gumroad-single-product="true">Get Sneak Peek (Free)</a>
+        <a class="btn btn-accent" href="https://jordanavery19.gumroad.com/l/open-relationship-playbook-sneakpeek" data-gumroad-single-product="true">Sneak Peek (1st Chapter for Free)</a>
       </p>
+      <p class="center small muted" style="margin-bottom: 40px;">Just curious? Grab the Sneak Peek — the first chapter is free.<br><strong>BONUS: The two first Toolbox worksheets are included!</strong></p>
     </div>
     <div class="wrap grid three">
       <article class="price card featured">
@@ -652,7 +654,7 @@
   </footer>
 
   <!-- Sticky CTA (mobile) -->
-  <a class="sticky-buy" href="#buy" aria-label="Buy The Open Relationship Playbook">Get the Playbook - from Free</a>
+  <a class="sticky-buy" href="https://jordanavery19.gumroad.com/l/open-relationship-playbook-sneakpeek" data-gumroad-single-product="true" aria-label="Get Sneak Peek Free">Get 1st Chapter for Free</a>
 
 
   <!-- Modals -->
@@ -772,6 +774,32 @@
         toggleNav(false);
       }
     });
+
+    // Sticky buy (mobile only, show after scroll ~250px)
+    (function () {
+      const sticky = document.querySelector('.sticky-buy');
+      if (!sticky) return;
+      const THRESHOLD = 250; // px
+      let visible = false;
+      function update() {
+        const isMobile = window.innerWidth <= 760;
+        const shouldShow = isMobile && window.scrollY > THRESHOLD;
+        if (shouldShow !== visible) {
+          visible = shouldShow;
+          sticky.classList.toggle('is-visible', visible);
+        }
+      }
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => { update(); ticking = false; });
+          ticking = true;
+        }
+      }, { passive: true });
+      window.addEventListener('resize', update);
+      // initial
+      update();
+    })();
   </script>
 </body>
 
