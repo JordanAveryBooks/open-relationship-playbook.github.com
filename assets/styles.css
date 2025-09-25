@@ -48,9 +48,10 @@
   --radius: 14px;
   --shadow: 0 14px 30px rgba(0, 0, 0, .08);
   --wrap: 1040px;
-  
+
   /* New accent (primary CTA) */
-  --accent: #118a52; /* green primary for Sneak Peek */
+  --accent: #118a52;
+  /* green primary for Sneak Peek */
   --accent-hover: #0f7847;
 }
 
@@ -119,12 +120,6 @@ img {
 
 .btn-primary {
   background: var(--brand);
-  color: #fff;
-  border-color: var(--brand)
-}
-
-.btn-primary {
-  background: var(--brand);
   color: var(--on-brand);
   border-color: var(--brand)
 }
@@ -150,6 +145,7 @@ img {
   color: #fff;
   border-color: var(--accent);
 }
+
 .btn-accent:hover,
 .btn-accent:focus-visible {
   background: var(--accent-hover);
@@ -168,6 +164,12 @@ img {
 .btn:focus-visible {
   transform: translateY(-1px) scale(1.02);
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12)
+}
+
+/* Consistent focus outline for keyboard users */
+.btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 /* Topbar */
@@ -232,10 +234,7 @@ img {
 }
 
 .brand {
-  letter-spacing: .5px
-}
-
-.brand {
+  letter-spacing: .5px;
   font-size: 55px;
   text-decoration: none;
   color: var(--brand);
@@ -537,8 +536,11 @@ summary {
 }
 
 @media (max-width:760px) {
+
   /* Hide footer primary CTA button on mobile (sticky CTA covers this need) */
-  .footnav a.btn.btn-primary { display: none; }
+  .footnav a.btn.btn-primary {
+    display: none;
+  }
 }
 
 /* Header nav emphasis */
@@ -547,6 +549,9 @@ summary {
   gap: 10px;
   flex-wrap: wrap
 }
+
+/* Extra nav items only visible in mobile drawer by default */
+.topnav a.is-extra { display: none; }
 
 .topnav a {
   color: var(--brand);
@@ -569,12 +574,13 @@ summary {
   right: 16px;
   bottom: 16px;
   z-index: 60;
-  display: none; /* only enabled in mobile media query */
+  display: none;
+  /* only enabled in mobile media query */
   text-align: center;
   text-decoration: none;
   background: var(--accent);
   color: #fff;
-  font-weight: 800; 
+  font-weight: 800;
   padding: .9rem 1rem;
   border-radius: 12px;
   box-shadow: var(--shadow);
@@ -586,11 +592,14 @@ summary {
   transition: opacity .35s ease, transform .35s ease, visibility .35s linear;
 }
 
+/* Consolidated mobile styles */
 @media (max-width:760px) {
+
+  /* Sticky CTA */
   .sticky-buy {
-    display: block; /* becomes potentially visible on mobile */
+    display: block;
   }
-  /* Visible state after scroll threshold (JS adds .is-visible) */
+
   .sticky-buy.is-visible {
     opacity: 1;
     visibility: visible;
@@ -598,37 +607,34 @@ summary {
     transform: translateY(0);
   }
 
+  /* Replace header CTA with sticky version */
   .topbar .btn {
     width: 38px;
-    height: 0px;
+    height: 0;
     overflow: hidden;
     opacity: 0;
   }
-}
 
-/* Mobile nav behavior */
-@media (max-width:760px) {
-
-  /* Center brand, burger on the left */
+  /* Topbar layout */
   .topbar .wrap {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
-    gap: 10px
+    gap: 10px;
   }
 
   .menu-toggle {
     display: block;
     grid-column: 1;
-    justify-self: start
+    justify-self: start;
   }
 
   .brand {
     grid-column: 2;
-    justify-self: center
+    justify-self: center;
   }
 
-  /* Off-canvas drawer from the left */
+  /* Off-canvas nav */
   .topnav {
     position: fixed;
     top: 75px;
@@ -643,16 +649,40 @@ summary {
     padding: 12px;
     z-index: 70;
     transform: translateX(-100%);
-    transition: transform .22s ease
+    transition: transform .22s ease;
   }
+
+  /* Show all links including extras inside mobile drawer */
+  .topnav a.is-extra { display: inline-block; }
 
   .topnav a {
     padding: .8rem 10px;
-    border-radius: 8px
+    border-radius: 8px;
   }
 
   body.nav-open .topnav {
-    transform: translateX(0)
+    transform: translateX(0);
+  }
+
+  /* Hero CTA stacking */
+  .hero-cta {
+    justify-content: center;
+  }
+
+  .hero-cta .btn {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .hero-cta .small.muted {
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* Hero top padding */
+  .hero {
+    padding-top: 15px;
   }
 }
 
@@ -663,11 +693,7 @@ summary {
   background: linear-gradient(180deg, var(--blush-2), var(--bg) 80%)
 }
 
-@media (max-width:760px) {
-  .hero {
-    padding-top: 20px
-  }
-}
+/* (Hero mobile padding handled in consolidated block) */
 
 .eyebrow {
   display: inline-block;
@@ -706,22 +732,7 @@ h2+.lead-xl {
   display: flex;
   gap: 12px;
   margin: 18px 0 0;
-  flex-wrap: wrap
-}
-
-@media (max-width:760px) {
-  .hero-cta {
-    justify-content: center;
-  }
-  .hero-cta .btn {
-    flex: 1 1 100%;
-    text-align: center;
-  }
-  .hero-cta .small.muted {
-    flex-basis: 100%;
-    text-align: center;
-    margin-top: 4px;
-  }
+  flex-wrap: wrap;
 }
 
 .hero-art {

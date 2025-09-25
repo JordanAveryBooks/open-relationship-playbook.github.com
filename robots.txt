@@ -1,0 +1,4 @@
+# robots.txt for The Open Relationship Playbook site
+
+User-agent: *
+Disallow: /docs/
